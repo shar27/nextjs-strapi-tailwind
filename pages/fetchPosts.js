@@ -20,7 +20,7 @@ export default function fetchPosts(data) {
     </div>
   )
 }
-
+const url = process.env.STRAPI_URL
 export const getStaticProps = async (ctx) => {
 
 const fetchData = {
@@ -57,7 +57,9 @@ const fetchData = {
         `
     })
 }
-const res = await fetch('http://localhost:1337/graphql', fetchData)
+
+
+const res = await fetch(`${process.env.STRAPI}/graphql`, fetchData)
 const data = await res.json()
 
 if(!data){
