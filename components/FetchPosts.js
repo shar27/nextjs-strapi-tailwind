@@ -1,9 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 
-export default function fetchPosts(data) {
-    console.log(data.data.data.posts.data)
-  console.log(data.data.data.posts.data.map((d) => console.log(d.attributes.Title)));
+export default function FetchPosts(data) {
+    
+  
     return (
     <div>
     <h1>Posts</h1>
@@ -59,7 +59,7 @@ const fetchData = {
 }
 
 
-const res = await fetch(`${process.env.STRAPI}/graphql`, fetchData)
+const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI}/graphql`, fetchData)
 const data = await res.json()
 
 if(!data){
