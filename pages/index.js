@@ -1,11 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import {loadStripe} from '@stripe/stripe-js'
-import {Elements} from '@stripe/react-stripe-js'
-import getPosts from '../functions/getPosts'
 import Nav from '../components/Nav'
 import { useState, useEffect } from 'react'
-import FetchPosts from '../components/FetchPosts'
 
 
 export default function Home({data}) {
@@ -57,7 +54,7 @@ const stripe  = loadStripe(publishableKey);
       <h1 className='font-bold flex justify-end text-red-500'>{date}</h1>
       </div>
       <Nav/>
-      <div className='bg-cover w-full h-96 relative z-0 opacity-75 flex justify-center mt-20'>
+      <div className='bg-cover w-96 h-96 relative z-0 opacity-75 flex justify-center mt-20'>
         <Image src={'http://localhost:1337/uploads/thumbnail_roman_kraft_Zua2hyv_T_Bk_unsplash_17e94609e6.jpg'} 
        className="rounded-lg"
      layout='fill'

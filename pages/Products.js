@@ -1,110 +1,171 @@
 import React from "react";
 import Image from "next/image";
 import Cart from "../components/Cart";
-import { useState } from "react";
-import Link from "next/link";
-import axios from 'axios'
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from 'next/router'
+
+import { selectItems } from "./slices/cartSlice";
+import { addToBasket } from "./slices/cartSlice";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
+
+export default function Products({ data, name, description, price, quantity, image }) {
+  const dispatch = useDispatch();
+  const router = useRouter()
+  const [item, setItem] = useState({});
 
 
-console.log(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+const basketView = () => {
+  router.push('/Checkout')
+}
 
-function Products() {
-  const [cart, setCart] = useState([]);
+  const pushProducts = () => {
+    setItem(data.data.products);
+  }
 
-  const [item, setItem] = useState({
-    name: "Apple AirPods",
-    description: "Latest Apple AirPods.",
-    image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mbp-spacegray-select-202011_GEO_IN?wid=904&hei=840&fmt=jpeg&qlt=80&.v=1613672874000",
-    quantity: 0,
-    price: 10,
-  });
+  useEffect(() => {
+    
+      pushProducts();
+    
+  }, []);
 
- 
-  
+  console.log(item.data);
+
+  const items = useSelector(selectItems);
 
   const cartChange = (value) => {
-    setItem({ ...item, quantity: Math.max(0, value) });
+    setItem({ ...item });
   };
 
   const addCart = () => {
-    cartChange(item.quantity + 1);
+    const product = {
+    
+      name,
+      description,
+      image,
+      quantity,
+      price,
+    };
+    //send product to basket slice
+    dispatch(addToBasket(product));
+    //cartChange(item.attributes.quantity + 1);
   };
 
   const minusCart = () => {
     cartChange(item.quantity - 1);
   };
 
-//   const handleCart = (e) => {
-//     setCart(cart++);
-//     console.log(cart);
-//   };
+  
 
-  const inputChange = () => {
-    cartChange(parseInt(e.target.value));
-  };
-
-  const hoveredStyle = {
-    cursor: "pointer",
-  };
-
-
-
-const createCheckOutSession = async () => {
+  const createCheckOutSession = async () => {
     const stripe = await stripePromise;
-    
-    
-    const checkoutSession = await axios.post('/api/createStripeSession', {
+
+    const checkoutSession = await axios.post("/api/createStripeSession", {
       item: item,
     });
 
-
     const result = await stripe.redirectToCheckout({
-    sessionId: checkoutSession.data.id,
-});
-if (result.error) {
-    alert(result.error.message);
-}
-};
+      sessionId: checkoutSession.data.id,
+    });
+    if (result.error) {
+      alert(result.error.message);
+    }
+  };
 
   return (
     <div>
       <Cart />
-      <Link href="/">
-        <div styles={hoveredStyle}>${item.quantity * item.price}</div>
-      </Link>
 
-      <div className="grid grid-cols-4 gap-4">
-        <div>
-          <Image src={item.image} width="300" height="300" />
-          <h3>{item.name}</h3>
-          <h3>{item.description}</h3>
-          <h2>{item.price}</h2>
-          <button
-            onClick={minusCart}
-            className="bg-blue-500 p-4 font-bold text-white rounded-lg"
-          >
-            -
-          </button>
-          <input
-            onChange={inputChange}
-            defaultValue={item.quantity}
-            type="number"
-          />
-          <button
-            onClick={addCart}
-            className="bg-blue-500 p-4 font-bold text-white rounded-lg"
-          >
-            +
-          </button>
-          <button onClick={createCheckOutSession} className="bg-blue-500 p-4 font-bold text-white rounded-lg">
-            Buy
-          </button>
-        </div>
+      <ShoppingCartIcon onClick={basketView} />
+    {items.length}
+
+      <div className="grid grid-cols-3 gap-4 ">
+        {item?.data?.map((d) => (
+          <div key={d.i}>
+            <Image
+              key={d.id}
+              src={
+                "http://localhost:1337/uploads/thumbnail_copywriting_cef10ec90b.jpg"
+              }
+              width={300}
+              height={300}
+            />
+            <h1>{d.attributes.name}</h1>
+            <h1>{d.attributes.description}</h1>
+            <h1>{"£" + d.attributes.price + ".00"}</h1>
+            <button
+              onClick={minusCart}
+              className="bg-blue-500 p-4 font-bold text-white rounded-lg"
+            >
+              -
+            </button>
+            
+            <button
+              onClick={addCart}
+              className="bg-blue-500 p-4 font-bold text-white rounded-lg"
+            >
+              +
+            </button>
+           
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-export default Products;
+export const getStaticProps = async (ctx) => {
+  const fetchProduct = {
+    method: "post",
+    headers: {
+      "content-type": "application/json",
+    },
+
+    body: JSON.stringify({
+      query: `{
+        
+        products{
+          data{
+            attributes{
+              image{
+                data{
+                  attributes{
+                    formats
+                  }
+                }
+              }
+              name
+              description
+              price
+              quantity
+            }
+          }
+        }
+    }
+      `,
+    }),
+  };
+
+  const res = await fetch("http://localhost:1337/graphql", fetchProduct);
+  const data = await res.json();
+
+  if (!data) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      data,
+      revalidate: 1,
+    },
+  };
+};
