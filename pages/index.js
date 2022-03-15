@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import {loadStripe} from '@stripe/stripe-js'
 import Nav from '../components/Nav'
+import News from '../components/News'
 import { useState, useEffect } from 'react'
 
 
@@ -21,6 +22,18 @@ useEffect(() => {
 }, [])
 
 
+// const url = 'https://newsapi.org/v2/everything?' +
+// 'q=Apple&' +
+// 'from=2022-03-14&' +
+// 'sortBy=popularity&' +
+// 'apiKey=5acfa131b28a4702994f62fcc61c9474';
+
+// const req = new Request(url);
+
+// fetch(req)
+// .then(function(response) {
+// console.log(response.json());
+// })
 
  
 
@@ -64,7 +77,7 @@ const stripe  = loadStripe(publishableKey);
       <h1 className='text-6xl font-bold'>{Heading}</h1> 
       <h2 className='text-3xl font-bold'>{subheading}</h2>
       </div>
-     
+    
     </div>
   )
 }
