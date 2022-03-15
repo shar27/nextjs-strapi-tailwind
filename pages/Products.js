@@ -20,7 +20,7 @@ export default function Products({ data, name, description, price }) {
   
   
   const router = useRouter()
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState([]);
 
 
 const basketView = () => {
@@ -28,7 +28,7 @@ const basketView = () => {
 }
 
   const pushProducts = () => {
-    setItem(data.data.products.data);
+    setItem(data?.data?.products?.data);
   }
 
   useEffect(() => {
@@ -43,20 +43,20 @@ const basketView = () => {
   const items = useSelector(selectItems);
   
 
-  const createCheckOutSession = async () => {
-    const stripe = await stripePromise;
+  // const createCheckOutSession = async () => {
+  //   const stripe = await stripePromise;
 
-    const checkoutSession = await axios.post("/api/createStripeSession", {
-      item: item,
-    });
+  //   const checkoutSession = await axios.post("/api/createStripeSession", {
+  //     item: item,
+  //   });
 
-    const result = await stripe.redirectToCheckout({
-      sessionId: checkoutSession.data.id,
-    });
-    if (result.error) {
-      alert(result.error.message);
-    }
-  };
+  //   const result = await stripe.redirectToCheckout({
+  //     sessionId: checkoutSession.data.id,
+  //   });
+  //   if (result.error) {
+  //     alert(result.error.message);
+  //   }
+  // };
 
   return (
     <div>
@@ -67,7 +67,7 @@ const basketView = () => {
     {items.length}
 
     <div>
-    {item.map(({attributes:{name, description,price}})=> (
+    {item?.map(({attributes:{name, description,price}})=> (
        
       
        <div>

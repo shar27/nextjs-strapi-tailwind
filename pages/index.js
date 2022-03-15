@@ -22,18 +22,7 @@ useEffect(() => {
 }, [])
 
 
-// const url = 'https://newsapi.org/v2/everything?' +
-// 'q=Apple&' +
-// 'from=2022-03-14&' +
-// 'sortBy=popularity&' +
-// 'apiKey=5acfa131b28a4702994f62fcc61c9474';
 
-// const req = new Request(url);
-
-// fetch(req)
-// .then(function(response) {
-// console.log(response.json());
-// })
 
  
 

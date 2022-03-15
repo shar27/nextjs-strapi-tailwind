@@ -3,8 +3,8 @@ const stripe = require("stripe")(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 console.log(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
 export default async (req, res) => {
-  const { item } = req.body;
-  console.log(item);
+  const { items } = req.body;
+  console.log(items);
 
   
 
@@ -15,22 +15,20 @@ export default async (req, res) => {
         price_data: {
           currency: "usd",
           product_data: {
-            images: [item.image],
-            name: item.name,
+           
+            name: items.name,
           },
-          unit_amount: item.price * 100,
+          unit_amount: items.price * 100,
         },
-        description: item.description,
-        quantity: item.quantity,
+        description: items.description,
+        
       },
     ],
     mode: "payment",
 
     success_url: "http://localhost:3000/Success",
     cancel_url: "http://localhost:3000/Cancel",
-    metadata: {
-      images: item.image,
-    },
+   
   });
   res.status(200).json({ id: session.id });
 };
