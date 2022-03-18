@@ -70,7 +70,7 @@ const basketView = () => {
     {item?.map(({attributes:{name, description,price}})=> (
        
       
-       <div>
+       <div key={item.id}>
        <Product 
     data={data} 
     name={name} 
