@@ -43,21 +43,9 @@ const basketView = () => {
   const items = useSelector(selectItems);
   
 
-  // const createCheckOutSession = async () => {
-  //   const stripe = await stripePromise;
+  //console.log(items.map(({attributes:{image:{data:[{attributes:{formats:{thumbnail:{url}}}}]}}})))
 
-  //   const checkoutSession = await axios.post("/api/createStripeSession", {
-  //     item: item,
-  //   });
-
-  //   const result = await stripe.redirectToCheckout({
-  //     sessionId: checkoutSession.data.id,
-  //   });
-  //   if (result.error) {
-  //     alert(result.error.message);
-  //   }
-  // };
-
+  //console.log(item.map(({attributes:{image:{data:[{attributes:{formats:{thumbnail:{url}}}}]}}})=> console.log(url)))
   return (
     <div>
     <Nav/>
@@ -65,17 +53,21 @@ const basketView = () => {
 
       <ShoppingCartIcon onClick={basketView} />
     {items.length}
-
+    
     <div>
-    {item?.map(({attributes:{name, description,price}})=> (
+   
+    {item?.map(({attributes:{name, description,price, image:{data:[{attributes:{formats:{thumbnail:{url}}}}]}}})=> (
        
       
-       <div key={item.id}>
-       <Product 
+       <div className="" key={item.id}>
+       <div>
+       <Product key={item.products} 
     data={data} 
     name={name} 
+    url={url}
     description={description} 
     price={price} />
+     </div>
      </div>
        
      ))}

@@ -4,6 +4,7 @@ import { selectItems } from './slices/cartSlice'
 import Product from '../components/Product'
 import CheckoutProduct from '../components/CheckoutProduct'
 import Nav from '../components/Nav'
+import Image from 'next/image'
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe(
@@ -40,6 +41,7 @@ function Checkout() {
       <div className="grid-cols-4">
       <CheckoutProduct
         name={item.name}
+        url={item.url}
         description={item.description}
         price={item.price}
         

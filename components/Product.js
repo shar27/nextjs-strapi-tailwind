@@ -8,7 +8,7 @@ import Image from 'next/image'
 
 
 
-function Product({data, name, description, price}) {
+function Product({data, name, description, price, image, url}) {
   const dispatch = useDispatch();
   
  
@@ -17,7 +17,8 @@ function Product({data, name, description, price}) {
     const product = {
     name,
     description,
-    price
+    price,
+    url
    
       
     };
@@ -33,16 +34,16 @@ function Product({data, name, description, price}) {
 
 
   return (
-    <div>
-    <div className='grid grid-cols-4'>
-  <div>
-  <h1>{name}</h1>
-    <p>{description}</p>
-    <p>{price}</p>   
-    <button onClick={addCart} className='bg-blue-500 text-white p-5'>Add me</button>
+    <div className="grid grid-cols-3 gap-2">
+ 
+  <h1 className="text-2xl font-bold">{name}</h1>
+    <p className="text-2xl">{description}</p>
+    <p className="text-lg font-bold">{price}</p>   
+    <Image src={url} width={300} height={300} />
+    <button onClick={addCart} className='bg-blue-500 text-white p-5 mt-5 rounded-lg w-24'>Add me</button>
     </div>
-      </div>
-      </div>
+  
+      
   )
 }
 

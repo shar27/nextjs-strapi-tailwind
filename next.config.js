@@ -9,7 +9,7 @@ module.exports = {
   //   return config;
   // },
   images: {
-    domains: ["store.storeimages.cdn-apple.com","localhost"] 
+    domains: ["res.cloudinary.com","localhost"] 
   },
   env: {
     stripe_public_key: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
