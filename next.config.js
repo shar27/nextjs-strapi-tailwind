@@ -9,7 +9,7 @@ module.exports = {
   //   return config;
   // },
   images: {
-    domains: ["res.cloudinary.com","localhost"] 
+    domains: ["res.cloudinary.com","localhost", "media.wired.com", "ichef.bbci.co.uk"] 
   },
   env: {
     stripe_public_key: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,

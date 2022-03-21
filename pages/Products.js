@@ -54,12 +54,12 @@ const basketView = () => {
       <ShoppingCartIcon onClick={basketView} />
     {items.length}
     
-    <div>
+    <div className="grid grid-cols-4">
    
     {item?.map(({attributes:{name, description,price, image:{data:[{attributes:{formats:{thumbnail:{url}}}}]}}})=> (
        
       
-       <div className="" key={item.id}>
+       
        <div>
        <Product key={item.products} 
     data={data} 
@@ -68,7 +68,7 @@ const basketView = () => {
     description={description} 
     price={price} />
      </div>
-     </div>
+     
        
      ))}
      </div>

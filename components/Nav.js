@@ -10,16 +10,16 @@ export default function Nav() {
     <Link href="/">
         <a className=' w-48 '>Home</a>
     </Link>
-    <Link href="/">
-        <a className=' w-48'>News</a>
+    <Link href="/News">
+        <a className=' w-48'>Articles</a>
     </Link>
-    <Link href="/">
+    <Link href="/Travel">
         <a className=' w-48'>Travel</a>
     </Link>
-    <Link href="/">
+    <Link href="/Sport">
         <a className=' w-48'>Sport</a>
     </Link>
-    <Link href="/">
+    <Link href="/Technology">
         <a className=' w-48'>Tech</a>
     </Link>
     <Link href="/Products">

@@ -6,7 +6,9 @@ import News from '../components/News'
 import { useState, useEffect } from 'react'
 
 
-export default function Home({data}) {
+export default function Home({data, articles}) {
+  
+  console.log(articles)
   const [date, setDate] = useState('') 
 const [publishableKey, setPublishableKey] = useState('')
 
@@ -56,7 +58,7 @@ const stripe  = loadStripe(publishableKey);
       <h1 className='font-bold flex justify-end text-red-500'>{date}</h1>
       </div>
       <Nav/>
-      <div className='bg-cover w-96 h-96 relative z-0 opacity-75 flex justify-center mt-20'>
+      <div className='bg-cover w-full h-96 relative z-0 opacity-75 flex justify-center mt-20'>
         <Image src={'http://localhost:1337/uploads/thumbnail_roman_kraft_Zua2hyv_T_Bk_unsplash_17e94609e6.jpg'} 
        className="rounded-lg"
      layout='fill'
@@ -66,10 +68,12 @@ const stripe  = loadStripe(publishableKey);
       <h1 className='text-6xl font-bold'>{Heading}</h1> 
       <h2 className='text-3xl font-bold'>{subheading}</h2>
       </div>
-    
+   
     </div>
   )
 }
+
+
 
 export const getStaticProps = async (ctx) => {
 

@@ -34,14 +34,19 @@ function Product({data, name, description, price, image, url}) {
 
 
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="">
  
+ <Image src={url} width={300} height={300} />
   <h1 className="text-2xl font-bold">{name}</h1>
     <p className="text-2xl">{description}</p>
-    <p className="text-lg font-bold">{price}</p>   
-    <Image src={url} width={300} height={300} />
+   
+    <p className="text-lg font-bold">£{price}</p>   
+    
+    
     <button onClick={addCart} className='bg-blue-500 text-white p-5 mt-5 rounded-lg w-24'>Add me</button>
     </div>
+    
+   
   
       
   )
